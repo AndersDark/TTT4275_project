@@ -31,4 +31,4 @@ def getConfused(pred, t):
 def getErrorRate(conf_matrix):
     total_sum = np.sum(conf_matrix)
     diag_sum = np.trace(conf_matrix)
-    return (total_sum-diag_sum)/diag_sum
+    return (total_sum-diag_sum)/total_sum
