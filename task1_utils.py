@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 def generateDataVectors(data):
     t = pd.get_dummies(data["Class"]).astype(int).to_numpy()
@@ -25,7 +27,24 @@ def loss(pred,label):
 def getConfused(pred, t):
     conf_matrix = np.zeros((3,3))
     for i in range(pred.shape[1]):
-        conf_matrix[np.argmax(t[:,i]),np.argmax(pred[:,i])] += 1
+        conf_matrix[int(np.argmax(t[:,i])), int(np.argmax(pred[:,i]))] += 1
+
+    total_sum = np.sum(conf_matrix)
+    diag_sum = np.trace(conf_matrix)
+    err_rate = round(100 * (total_sum - diag_sum) / total_sum, 2)
+    conf_matrix = conf_matrix.astype(int)
+
+    labels = ["Setosa", "Versicolor", "Virginica"]
+
+    plt.figure(figsize=(6, 5))
+    sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues',
+                xticklabels=labels, yticklabels=labels)
+    plt.xlabel("Predicted Class", fontsize = 12)
+    plt.ylabel("True Class", fontsize = 12)
+    plt.title(f"Confusion Matrix - Error Rate: {err_rate}%")
+    plt.tight_layout()
+    plt.show()
+
     return conf_matrix
 
 def getErrorRate(conf_matrix):
