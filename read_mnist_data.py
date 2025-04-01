@@ -25,20 +25,21 @@ def read_labels(filename):
         label_data = np.frombuffer(f.read(num_labels), dtype=np.uint8)
     return label_data
 
-# === Load Train and Test Data ===
-trainv, num_train, row_size, col_size, vec_size = read_images('data/MNIST/train_images.bin')
-testv, num_test, _, _, _ = read_images('data/MNIST/test_images.bin')
-trainlab = read_labels('data/MNIST/train_labels.bin')
-testlab = read_labels('data/MNIST/test_labels.bin')
+if __name__ == "__main__":
+    # === Load Train and Test Data ===
+    trainv, num_train, row_size, col_size, vec_size = read_images('data/MNIST/train_images.bin')
+    testv, num_test, _, _, _ = read_images('data/MNIST/test_images.bin')
+    trainlab = read_labels('data/MNIST/train_labels.bin')
+    testlab = read_labels('data/MNIST/test_labels.bin')
 
-# === Save to a .npz file (like .mat for Python) ===
-np.savez('data_all.npz', 
-         num_train=num_train, 
-         num_test=num_test, 
-         row_size=row_size, 
-         col_size=col_size, 
-         vec_size=vec_size, 
-         trainv=trainv, 
-         testv=testv, 
-         trainlab=trainlab, 
-         testlab=testlab)
+    # === Save to a .npz file (like .mat for Python) ===
+    np.savez('data/MNIST/data_all.npz', 
+            num_train=num_train, 
+            num_test=num_test, 
+            row_size=row_size, 
+            col_size=col_size, 
+            vec_size=vec_size, 
+            trainv=trainv, 
+            testv=testv, 
+            trainlab=trainlab, 
+            testlab=testlab)
